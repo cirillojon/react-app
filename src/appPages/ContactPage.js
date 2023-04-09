@@ -30,7 +30,7 @@ const generateCards = () => {
   return shuffleArray(cards);
 };
 
-const ContactPage = () => {
+const Game2 = () => {
   const [cards, setCards] = useState(generateCards());
   const [flippedCards, setFlippedCards] = useState([]);
 
@@ -79,4 +79,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default Game2;
