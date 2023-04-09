@@ -14,6 +14,9 @@ const Navbar = () => {
         <li>
           <NavLink to="/contact" activeClassName="active">Contact</NavLink>
         </li>
+         <li>
+          <NavLink to="/Game1" activeClassName="active">Game1</NavLink>
+        </li>
       </ul>
     </nav>
   );
