@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Game4.css';
 
 const getRandomPosition = (gridSize) => Math.floor(Math.random() * gridSize);
@@ -75,11 +75,11 @@ const Game4 = () => {
   };
 
   useEffect(() => {
-    if (!gameOver) {
-      const interval = setInterval(moveSnake, 100);
-      return () => clearInterval(interval);
-    }
-  }, [snake, gameOver]);
+    const interval = setInterval(() => {
+      moveSnake();
+    }, speed);
+    return () => clearInterval(interval);
+  }, [moveSnake]);
 
   useEffect(() => {
     window.addEventListener('keydown', changeDirection);
