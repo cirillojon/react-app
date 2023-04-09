@@ -1,30 +1,33 @@
-/* Game3.css */
+/* Import a font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.game3 {
+.Game3 {
+  font-family: 'Roboto', sans-serif;
+  background-color: #F2F2F2;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
 }
 
-.holes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 300px;
-  margin-top: 20px;
+.Game3 h1 {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
-.hole {
-  width: 80px;
-  height: 80px;
-  background-color: #ccc;
+.Game3 button {
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
   border: none;
-  border-radius: 50%;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-  outline: none;
+  background-color: #1E88E5;
+  color: #FFF;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.hole.active {
-  background-color: red;
+.Game3 button:hover {
+  background-color: #1565C0;
 }
