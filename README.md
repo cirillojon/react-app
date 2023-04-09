@@ -2,8 +2,8 @@
 https://animated-flan-b3aa32.netlify.app
 
 ## Currently:
-- using this repo to mess around with react 
-- added a few mini games for now including: 
+- Using this repo to mess around with react 
+- Added a few mini games for now including: 
      - Rock Paper Scissors 
      - Number Guesser
      - Tic-Tac-Toe
