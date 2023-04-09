@@ -8,7 +8,7 @@ const Game4 = () => {
     const [food, setFood] = useState({ x: getRandomPosition(20), y: getRandomPosition(20) });
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
-    const [speed] = useState(100);  
+    const [speed] = useState(100); 
 
   const changeDirection = (event) => {
     switch (event.key) {
@@ -80,7 +80,8 @@ const Game4 = () => {
       moveSnake();
     }, speed);
     return () => clearInterval(interval);
-  }, [moveSnake]);
+  }, [moveSnake, speed]);
+  
 
   useEffect(() => {
     window.addEventListener('keydown', changeDirection);
