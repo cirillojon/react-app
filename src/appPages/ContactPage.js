@@ -69,9 +69,6 @@ const ContactPage = () => {
 
   return (
     <div>
-      <h1>Contact Us</h1>
-      <p>Email: contact@example.com</p>
-      <p>Phone: +1 (123) 456-7890</p>
       <h2>Memory Card Game</h2>
       <div className="memory-grid">
         {cards.map((card, index) => (
