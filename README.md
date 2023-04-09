@@ -14,7 +14,7 @@ https://animated-flan-b3aa32.netlify.app
 
 ## App created using netlify craate react app demo
    
-   - Originao readme is below:
+   - Original readme is below:
 
 
 
