@@ -53,7 +53,7 @@ const RockPaperScissors = () => {
   );
 };
 
-const AboutPage = () => {
+const Minigames = () => {
   const [numberToGuess] = useState(Math.floor(Math.random() * 10) + 1);
   const [userGuess, setUserGuess] = useState("");
   const [feedback, setFeedback] = useState("");
