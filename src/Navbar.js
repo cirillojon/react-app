@@ -9,13 +9,13 @@ const Navbar = () => {
           <NavLink exact to="/" activeClassName="active">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/about" activeClassName="active">About</NavLink>
+          <NavLink to="/about" activeClassName="active">Minigames</NavLink>
         </li>
         <li>
-          <NavLink to="/contact" activeClassName="active">Contact</NavLink>
+          <NavLink to="/contact" activeClassName="active">Card Matching</NavLink>
         </li>
          <li>
-          <NavLink to="/Game1" activeClassName="active">Game1</NavLink>
+          <NavLink to="/Game1" activeClassName="active">Tic-Tac-Toe</NavLink>
         </li>
       </ul>
     </nav>
