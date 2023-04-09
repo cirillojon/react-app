@@ -10,9 +10,9 @@ https://animated-flan-b3aa32.netlify.app
 
 - Will eventually turn into something substantial 
 
-# App creating using netlify craate react app demo
-
-# Originao readme is below:
+## App created using netlify craate react app demo.
+   
+   - Originao readme is below:
 
 
 
