@@ -69,7 +69,7 @@ const Game2 = () => {
 
   return (
     <div>
-      <h2>Memory Card Game</h2>
+      <h1>Memory Card Game</h1>
       <div className="memory-grid">
         {cards.map((card, index) => (
           <MemoryCard key={index} card={card} onClick={() => handleCardClick(index)} />
