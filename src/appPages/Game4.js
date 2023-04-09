@@ -4,10 +4,11 @@ import './Game4.css';
 const getRandomPosition = (gridSize) => Math.floor(Math.random() * gridSize);
 
 const Game4 = () => {
-  const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
-  const [food, setFood] = useState({ x: getRandomPosition(20), y: getRandomPosition(20) });
-  const [direction, setDirection] = useState('RIGHT');
-  const [gameOver, setGameOver] = useState(false);
+    const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
+    const [food, setFood] = useState({ x: getRandomPosition(20), y: getRandomPosition(20) });
+    const [direction, setDirection] = useState('RIGHT');
+    const [gameOver, setGameOver] = useState(false);
+    const [speed] = useState(100);  
 
   const changeDirection = (event) => {
     switch (event.key) {
