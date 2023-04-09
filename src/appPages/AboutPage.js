@@ -78,7 +78,6 @@ const AboutPage = () => {
   return (
     <div>
       <h1>Minigames</h1>
-      <p>Number Gusser. Rock Paper Scissors. </p>
 
       <h2>Number Guessing Game</h2>
       <p>Guess a number between 1 and 10:</p>
