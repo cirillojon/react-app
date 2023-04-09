@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <p>This is the home page of our React app.</p>
+      <p>One day this will be something great. </p>
     </div>
   );
 }
