@@ -1,13 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+const MemoryCard = ({ card, onClick }) => {
+  return (
+    <button
+      className={`memory-card ${card.flipped ? 'flipped' : ''}`}
+      onClick={onClick}
+      disabled={card.flipped}
+    >
+      {card.flipped && card.value}
+    </button>
+  );
+};
+
+const shuffleArray = (array) => {
+  const newArray = array.slice();
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+
+const generateCards = () => {
+  const values = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const cards = values
+    .split('')
+    .concat(values.split(''))
+    .map((value) => ({ value, flipped: false, found: false }));
+  return shuffleArray(cards);
+};
 
 const ContactPage = () => {
+  const [cards, setCards] = useState(generateCards());
+  const [flippedCards, setFlippedCards] = useState([]);
+
+  useEffect(() => {
+    if (flippedCards.length === 2) {
+      setTimeout(() => {
+        const [firstCard, secondCard] = flippedCards;
+        if (firstCard.card.value === secondCard.card.value) {
+          setCards(
+            cards.map((card, index) =>
+              index === firstCard.index || index === secondCard.index
+                ? { ...card, found: true }
+                : card
+            )
+          );
+        } else {
+          setCards(
+            cards.map((card, index) =>
+              index === firstCard.index || index === secondCard.index
+                ? { ...card, flipped: false }
+                : card
+            )
+          );
+        }
+        setFlippedCards([]);
+      }, 1000);
+    }
+  }, [flippedCards, cards]);
+
+  const handleCardClick = (index) => {
+    if (flippedCards.length < 2) {
+      setCards(cards.map((card, i) => (i === index ? { ...card, flipped: true } : card)));
+      setFlippedCards([...flippedCards, { card: cards[index], index }]);
+    }
+  };
+
   return (
     <div>
       <h1>Contact Us</h1>
       <p>Email: contact@example.com</p>
       <p>Phone: +1 (123) 456-7890</p>
+      <h2>Memory Card Game</h2>
+      <div className="memory-grid">
+        {cards.map((card, index) => (
+          <MemoryCard key={index} card={card} onClick={() => handleCardClick(index)} />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default ContactPage;
