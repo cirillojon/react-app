@@ -1,5 +1,7 @@
 ## URL
-https://animated-flan-b3aa32.netlify.app
+https://react-app-sandbox.netlify.app/
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ef82cf61-c43e-441c-bb01-d06013709d08/deploy-status)](https://app.netlify.com/sites/react-app-sandbox/deploys)
 
 ## Currently:
 - Using this repo to mess around with react 
