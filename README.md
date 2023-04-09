@@ -7,6 +7,7 @@ https://animated-flan-b3aa32.netlify.app
      - Rock Paper Scissors 
      - Number Guesser
      - Tic-Tac-Toe
+     - Memory Card Matching
 
 - Will eventually turn into something substantial 
 
