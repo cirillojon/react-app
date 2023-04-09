@@ -1,5 +1,5 @@
 ## URL
-https://animated-flan-b3aa32.netlify.app/contact
+https://animated-flan-b3aa32.netlify.app
 
 
 
