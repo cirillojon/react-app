@@ -8,6 +8,7 @@ https://animated-flan-b3aa32.netlify.app
      - Number Guesser
      - Tic-Tac-Toe
      - Memory Card Matching
+     - Whac-A-Mole
 
 - Will eventually turn into something substantial 
 
