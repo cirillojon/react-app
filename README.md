@@ -11,6 +11,7 @@ https://react-app-sandbox.netlify.app/
      - Tic-Tac-Toe
      - Memory Card Matching
      - Whac-A-Mole
+     - Snake
 
 - Will eventually turn into something substantial 
 
