@@ -1,11 +1,18 @@
 ## URL
 https://animated-flan-b3aa32.netlify.app
 
+## Currently:
+- using this repo to mess around with react 
+- added a few mini games for now including: 
+     - Rock Paper Scissors 
+     - Number Guesser
+     - Tic-Tac-Toe
 
+- Will eventually turn into something substantial 
 
-App creating using netlify craate react app demo
+# App creating using netlify craate react app demo
 
-original readme is below:
+# Originao readme is below:
 
 
 
