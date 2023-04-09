@@ -74,8 +74,7 @@ const calculateWinner = (squares) => {
 const Game1 = () => {
   return (
     <div>
-      <h1>Game1</h1>
-      <p>Tic Tac Toe</p>
+      <h1>Tic-Tac-Toe</h1>
       <Board />
     </div>
   );
