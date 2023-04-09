@@ -9,3 +9,4 @@ const Game1 = () => {
   );
 }
 
+export default Game1;
