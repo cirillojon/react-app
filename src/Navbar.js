@@ -17,6 +17,9 @@ const Navbar = () => {
          <li>
           <NavLink to="/Game1" activeClassName="active">Tic-Tac-Toe</NavLink>
         </li>
+        <li>
+          <NavLink to="/Game3" activeClassName="active">Game3</NavLink>
+        </li>
       </ul>
     </nav>
   );
