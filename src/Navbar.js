@@ -12,7 +12,7 @@ const Navbar = () => {
           <NavLink to="/minigames" activeClassName="active">Minigames</NavLink>
         </li>
         <li>
-          <NavLink to="/contact" activeClassName="active">Card Matching</NavLink>
+          <NavLink to="/Game2" activeClassName="active">Card Matching</NavLink>
         </li>
          <li>
           <NavLink to="/Game1" activeClassName="active">Tic-Tac-Toe</NavLink>
