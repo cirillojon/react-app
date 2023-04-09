@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './appPages/HomePage';
 import AboutPage from './appPages/AboutPage';
 import ContactPage from './appPages/ContactPage';
 
-const Routes = () => (
+const AppRoutes = () => (
   <Router>
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/contact" component={ContactPage} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+    </Routes>
   </Router>
 );
 
-export default Routes;
+export default AppRoutes;
