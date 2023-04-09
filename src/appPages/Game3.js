@@ -45,7 +45,6 @@ const Game3 = () => {
   return (
     <div className="game3">
       <h1>Whac-A-Mole</h1>
-      <button>Start Game</button>
       <h2>Score: {score}</h2>
       <h3>Time Left: {timeLeft}s</h3>
       <div className="holes-grid">
