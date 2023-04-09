@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const AboutPage = () => {
-  const [numberToGuess, setNumberToGuess] = useState(Math.floor(Math.random() * 10) + 1);
+  const [numberToGuess] = useState(Math.floor(Math.random() * 10) + 1);
   const [userGuess, setUserGuess] = useState("");
   const [feedback, setFeedback] = useState("");
 
