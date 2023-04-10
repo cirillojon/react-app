@@ -28,9 +28,8 @@ const SmokeEffect = ({ count, color }) => {
   const particleGeometryRef = useRef();
   const particleMaterialRef = useRef();
 
-  useFrame((state) => {
+  useFrame(() => {
     if (particleGeometryRef.current) {
-      const time = state.clock.getElapsedTime();
       for (let i = 0; i < particles.length; i++) {
         const particle = particles[i];
         particle.t += particle.speed * (1 + particle.factor);
