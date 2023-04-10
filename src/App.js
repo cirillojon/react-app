@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import Routes from "./routes";
 import Navbar from "./Navbar";
-import LambdaDemo from "./LambdaDemo"; // Make sure the path is correct
+import LambdaDemo from "./LambdaDemo"; 
+import './theme.css';
 
 class App extends Component {
   render() {
