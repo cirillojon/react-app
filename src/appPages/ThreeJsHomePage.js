@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { BoxBufferGeometry, MeshStandardMaterial } from 'three';
+import { MeshStandardMaterial } from 'three';
 import { Cone } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
@@ -10,7 +10,7 @@ const ThreeJsHomePage = () => {
   const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
 
-  const cubeGeometry = new BoxBufferGeometry(1, 1, 1); // create a BoxBufferGeometry instance
+  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // create a BoxGeometry instance
   const cubeMaterial = new MeshStandardMaterial({ color: 'hotpink' }); // create a MeshStandardMaterial instance
 
   useEffect(() => {
