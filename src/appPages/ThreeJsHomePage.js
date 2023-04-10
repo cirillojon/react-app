@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Cylinder, Cone } from '@react-three/drei';
 import * as THREE from 'three'; 
+import { PointLight } from '@react-three/drei';
 
 
 const ThreeJsHomePage = () => {
