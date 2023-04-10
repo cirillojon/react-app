@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Cylinder, Cone } from '@react-three/drei';
-import SmokeEffect from './SmokeEffect';
+//import SmokeEffect from './SmokeEffect';
 
 const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
