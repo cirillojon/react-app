@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTrail, a } from '@react-spring/three';
-import { Star } from 'drei';
+import { Star } from '@react-three/drei';
 
 const TrailStar = ({ count, children, ...props }) => {
   const [trail, setTrail] = useTrail(count, () => ({
