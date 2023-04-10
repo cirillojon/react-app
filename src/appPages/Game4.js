@@ -32,22 +32,20 @@ const Game4 = () => {
   }
 }, []);
 
-const handleTouch = useCallback((event) => {
-  setStartX(event.touches[0].clientX);
-  setStartY(event.touches[0].clientY);
-}, []);
 
-
-const handleEnd = useCallback(
-    (endEvent) => {
+const handleClick = useCallback(
+    (clickEvent) => {
       if (gameOver) return;
   
-      endEvent.preventDefault();
-      const endX = endEvent.changedTouches[0].clientX;
-      const endY = endEvent.changedTouches[0].clientY;
+      const rect = clickEvent.target.getBoundingClientRect();
+      const clickX = clickEvent.clientX - rect.left;
+      const clickY = clickEvent.clientY - rect.top;
   
-      const diffX = endX - startX;
-      const diffY = endY - startY;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+  
+      const diffX = clickX - centerX;
+      const diffY = clickY - centerY;
   
       if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) {
@@ -63,11 +61,9 @@ const handleEnd = useCallback(
         }
       }
     },
-    [gameOver, startX, startY]
+    [gameOver]
   );
-
-
-
+  
 const moveSnake = useCallback(() => {
   if (gameOver) return;
 
@@ -111,8 +107,6 @@ const moveSnake = useCallback(() => {
   setSnake(newSnake);
 }, [snake, food, direction, setSnake, setFood, setGameOver, gameOver]);
 
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       moveSnake();
@@ -121,22 +115,19 @@ const moveSnake = useCallback(() => {
   }, [moveSnake, speed]);
   
 
-  useEffect(() => {
-    window.addEventListener("keydown", changeDirection);
-    window.addEventListener("touchstart", handleTouch);
-    window.addEventListener("touchend", handleEnd);
-    return () => {
-      window.removeEventListener("keydown", changeDirection);
-      window.removeEventListener("touchstart", handleTouch);
-      window.removeEventListener("touchend", handleEnd);
-    };
-  }, [changeDirection, handleTouch, handleEnd]);
+useEffect(() => {
+  window.addEventListener("keydown", changeDirection);
+  return () => {
+    window.removeEventListener("keydown", changeDirection);
+  };
+}, [changeDirection]);
+
 
   return (
     <div className="game4">
       <h1>Snake Game</h1>
       {gameOver ? <h2>Game Over!</h2> : null}
-      <div className="game4-grid">
+      <div className="game4-grid" onClick={handleClick}>
         {Array.from({ length: 20 * 20 }, (_, index) => {
           const x = index % 20;
           const y = Math.floor(index / 20);
