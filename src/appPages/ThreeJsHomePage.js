@@ -14,25 +14,6 @@ const randomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const generateShapes = () => {
-  const shapes = [];
-
-  for (let i = 0; i < 50; i++) {
-    shapes.push(
-      <Icosahedron key={i} position={[randomPos(), randomPos(), randomPos()]} args={[0.5, 1]}>
-        <meshStandardMaterial
-          attach="material"
-          color={randomColor()}
-          emissive={randomColor()}
-          emissiveIntensity={0.5}
-        />
-      </Icosahedron>
-    );
-  }
-
-  return shapes;
-};
-
 const ThreeJsHomePage = () => {
   const starRef = useRef();
   const { scene } = useThree();
@@ -40,6 +21,7 @@ const ThreeJsHomePage = () => {
   const [move, setMove] = useState(false);
   const [pointerDown, setPointerDown] = useState(false);
   const [pointerPos, setPointerPos] = useState({ x: 0, y: 0 });
+  const [shapes, setShapes] = useState([]);
   const { size } = useThree();
 
   const handlePointerDown = useCallback((event) => {
@@ -71,6 +53,18 @@ const ThreeJsHomePage = () => {
     };
   }, [handlePointerDown, handlePointerUp, pointerDown, pointerPos]);
 
+  useEffect(() => {
+    const pointLight = new THREE.PointLight('yellow', 5, 5);
+    starRef.current.add(pointLight);
+  }, [scene]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShapes(generateShapes());
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   useFrame(() => {
     if (starRef.current) {
       const speed = move ? 0.2 : 0.1;
@@ -90,25 +84,20 @@ const ThreeJsHomePage = () => {
     }
   });
 
-  useEffect(() => {
-    const pointLight = new THREE.PointLight('yellow', 5, 5);
-    starRef.current.add(pointLight);
-  }, [scene]);
-
-  return (     <group ref={starRef}>
-    <Icosahedron args={[1, 2]} castShadow>
-      <meshStandardMaterial
-        attach="material"
-        color="yellow"
-        emissive="yellow"
-        emissiveIntensity={1}
-      />
-    </Icosahedron>
-    <Stars />
-    {generateShapes()}
-  </group>
-);
-};
-
-export default ThreeJsHomePage;
-
+  return (
+    <group ref={starRef}>
+      <Icosahedron args={[1, 2]} castShadow>
+        <meshStandardMaterial
+          attach ="material"
+          color="yellow"
+          emissive="yellow"
+          emissiveIntensity={1}
+          />
+          </Icosahedron>
+          <Stars />
+          {shapes}
+          </group>
+          );
+          };
+          
+          export default ThreeJsHomePage;
