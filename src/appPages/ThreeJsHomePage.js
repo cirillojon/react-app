@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,14 +11,14 @@ const ThreeJsHomePage = () => {
   const [pointerDown, setPointerDown] = useState(false);
   const [pointerPos, setPointerPos] = useState({ x: 0, y: 0 });
 
-  const handlePointerDown = (event) => {
+  const handlePointerDown = useCallback((event) => {
     setPointerDown(true);
     setPointerPos({ x: event.clientX, y: event.clientY });
-  };
+  }, []);
 
-  const handlePointerUp = () => {
+  const handlePointerUp = useCallback(() => {
     setPointerDown(false);
-  };
+  }, []);
 
   useEffect(() => {
     const handlePointerMove = (event) => {
