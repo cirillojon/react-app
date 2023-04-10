@@ -9,6 +9,11 @@ const randomPos = () => {
   return Math.random() * (max - min) + min;
 };
 
+const randomColor = () => {
+  const colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink'];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 const generateShapes = () => {
   const shapes = [];
 
@@ -17,7 +22,8 @@ const generateShapes = () => {
       <Icosahedron key={i} position={[randomPos(), randomPos(), randomPos()]} args={[0.5, 1]}>
         <meshStandardMaterial
           attach="material"
-          color="yellow"
+          //color="yellow"
+          color={randomColor()}
           emissive="yellow"
           emissiveIntensity={0.5}
         />
