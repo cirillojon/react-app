@@ -4,7 +4,7 @@ import { Cylinder, Cone } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
-  const [setMove] = useState({ forward: false, backward: false, left: false, right: false, up: false, down: false });
+  const [move, setMove] = useState({ forward: false, backward: false, left: false, right: false, up: false, down: false });
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -55,14 +55,16 @@ const ThreeJsHomePage = () => {
     };
   }, []);
 
+
   useFrame(({ clock }) => {
-  if (spaceshipRef.current) {
-  const speed = 0.1;
-  const { x, y } = rotate;
-  spaceshipRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
-  spaceshipRef.current.translateZ(-speed);
-  }
+    if (spaceshipRef.current) {
+      const speed = 0.1;
+      const { x, y } = rotate;
+      spaceshipRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
+      spaceshipRef.current.translateZ(-speed);
+    }
   });
+  
   
   return (
   <group ref={spaceshipRef}>
