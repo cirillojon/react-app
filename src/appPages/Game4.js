@@ -29,38 +29,38 @@ const Game4 = () => {
     }
   };
   
-  const handleTouch = (event) => {
-    const startX = event.touches[0].clientX;
-    const startY = event.touches[0].clientY;
+  let startX;
+  let startY;
+  
+  const handleMove = (moveEvent) => {
+  if (gameOver) return;
 
-    const handleMove = (moveEvent) => {
-      moveEvent.preventDefault();
-      const moveX = moveEvent.touches[0].clientX;
-      const moveY = moveEvent.touches[0].clientY;
+  moveEvent.preventDefault();
+  const moveX = moveEvent.touches[0].clientX;
+  const moveY = moveEvent.touches[0].clientY;
 
-      const diffX = moveX - startX;
-      const diffY = moveY - startY;
+  const diffX = moveX - startX;
+  const diffY = moveY - startY;
 
-      if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 0) {
-          setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-        } else {
-          setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
-        }
-      } else {
-        if (diffY > 0) {
-          setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
-        } else {
-          setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
-        }
-      }
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX > 0) {
+      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+    } else {
+      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+    }
+  } else {
+    if (diffY > 0) {
+      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+    } else {
+      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+    }
+  }
+};
 
-      window.removeEventListener('touchmove', handleMove);
-    };
-
-    window.addEventListener('touchmove', handleMove);
-  };
-
+const handleTouch = (event) => {
+  startX = event.touches[0].clientX;
+  startY = event.touches[0].clientY;
+};
 
    const moveSnake = useCallback(() => {
     setSnake((prev) => {
@@ -116,14 +116,17 @@ const Game4 = () => {
   }, [moveSnake, speed]);
   
 
-  useEffect(() => {
+    useEffect(() => {
     window.addEventListener('keydown', changeDirection);
     window.addEventListener('touchstart', handleTouch);
+    window.addEventListener('touchmove', handleMove);
     return () => {
       window.removeEventListener('keydown', changeDirection);
       window.removeEventListener('touchstart', handleTouch);
+      window.removeEventListener('touchmove', handleMove);
     };
   }, []);
+
 
 
   return (
