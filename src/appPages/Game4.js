@@ -9,8 +9,6 @@ const Game4 = () => {
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
     const [speed] = useState(100);
-    const [startX, setStartX] = useState(null);
-    const [startY, setStartY] = useState(null);
 
 
   const changeDirection = useCallback((event) => {
