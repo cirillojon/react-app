@@ -125,11 +125,11 @@ useEffect(() => {
   }, [changeDirection, handleTouchStart, handleTouchMove]);
   
   return (
-    <div className="game">
+    <div className="game4">
       {/* Game board */}
-      <div className="game-board">
+      <div className="game4-grid">
         {/* Food */}
-        <div className="food" style={{ left: food.x * 20, top: food.y * 20 }} />
+        <div className="food-cell" style={{ left: food.x * 20, top: food.y * 20 }} />
 
         {/* Snake */}
         {snake.map((segment, index) => (
