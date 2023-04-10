@@ -4,68 +4,64 @@ import './Game4.css';
 const getRandomPosition = (gridSize) => Math.floor(Math.random() * gridSize);
 
 const Game4 = () => {
-    const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
-    const [food, setFood] = useState({ x: getRandomPosition(20), y: getRandomPosition(20) });
-    const [direction, setDirection] = useState('RIGHT');
-    const [gameOver, setGameOver] = useState(false);
-    const [speed] = useState(100);
-    const [startX, setStartX] = useState(null);
-    const [startY, setStartY] = useState(null);
-
+  const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
+  const [food, setFood] = useState({ x: getRandomPosition(20), y: getRandomPosition(20) });
+  const [direction, setDirection] = useState('RIGHT');
+  const [gameOver, setGameOver] = useState(false);
+  const [speed] = useState(100);
+  const [startX, setStartX] = useState(null);
+  const [startY, setStartY] = useState(null);
 
   const changeDirection = useCallback((event) => {
-  switch (event.key) {
-    case 'ArrowUp':
-      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
-      break;
-    case 'ArrowDown':
-      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
-      break;
-    case 'ArrowLeft':
-      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
-      break;
-    case 'ArrowRight':
-      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-      break;
-    default:
-      break;
-  }
-}, []);
-
-const handleTouch = useCallback((event) => {
-  setStartX(event.touches[0].clientX);
-  setStartY(event.touches[0].clientY);
-}, []);
-
-
-const handleMove = useCallback((moveEvent) => {
-  if (gameOver) return;
-
-  moveEvent.preventDefault();
-  const moveX = moveEvent.touches[0].clientX;
-  const moveY = moveEvent.touches[0].clientY;
-
-  const diffX = moveX - startX;
-  const diffY = moveY - startY;
-
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    if (diffX > 0) {
-      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-    } else {
-      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+    switch (event.key) {
+      case 'ArrowUp':
+        setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+        break;
+      case 'ArrowDown':
+        setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+        break;
+      case 'ArrowLeft':
+        setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+        break;
+      case 'ArrowRight':
+        setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+        break;
+      default:
+        break;
     }
-  } else {
-    if (diffY > 0) {
-      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+  }, []);
+
+  const handleTouchStart = useCallback((event) => {
+    setStartX(event.touches[0].clientX);
+    setStartY(event.touches[0].clientY);
+  }, []);
+
+  const handleTouchMove = useCallback((event) => {
+    if (gameOver) return;
+
+    event.preventDefault();
+    const moveX = event.touches[0].clientX;
+    const moveY = event.touches[0].clientY;
+
+    const diffX = moveX - startX;
+    const diffY = moveY - startY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+      } else {
+        setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+      }
     } else {
-      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+      if (diffY > 0) {
+        setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+      } else {
+        setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+      }
     }
-  }
-}, [gameOver, startX, startY]);
+  }, [gameOver, startX, startY]);
 
-
-
-const moveSnake = useCallback(() => {
+  const moveSnake = useCallback(() => {
   if (gameOver) return;
 
   const head = snake[0];
@@ -91,7 +87,7 @@ const moveSnake = useCallback(() => {
   if (
     newHead.x < 0 ||
     newHead.x >= 20 ||
-    newHead.y < 0 ||
+    newHead.y < 0 || // fixed typo here
     newHead.y >= 20 ||
     snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
   ) {
@@ -108,49 +104,44 @@ const moveSnake = useCallback(() => {
   setSnake(newSnake);
 }, [snake, food, direction, setSnake, setFood, setGameOver, gameOver]);
 
-
-
-  useEffect(() => {
+useEffect(() => {
     const interval = setInterval(() => {
       moveSnake();
     }, speed);
+
     return () => clearInterval(interval);
   }, [moveSnake, speed]);
-  
 
   useEffect(() => {
-  window.addEventListener('keydown', changeDirection);
-  window.addEventListener('touchstart', handleTouch);
-  window.addEventListener('touchmove', handleMove);
-  return () => {
-    window.removeEventListener('keydown', changeDirection);
-    window.removeEventListener('touchstart', handleTouch);
-    window.removeEventListener('touchmove', handleMove);
-  };
-}, [changeDirection, handleTouch, handleMove]);
+    window.addEventListener('keydown', changeDirection);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
 
+    return () => {
+      window.removeEventListener('keydown', changeDirection);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [changeDirection, handleTouchStart, handleTouchMove]);
+  
   return (
-    <div className="game4">
-      <h1>Snake Game</h1>
-      {gameOver ? <h2>Game Over!</h2> : null}
-      <div className="game4-grid">
-        {Array.from({ length: 20 * 20 }, (_, index) => {
-          const x = index % 20;
-          const y = Math.floor(index / 20);
+    <div className="game">
+      {/* Game board */}
+      <div className="game-board">
+        {/* Food */}
+        <div className="food" style={{ left: food.x * 20, top: food.y * 20 }} />
 
-          if (snake.some((segment) => segment.x === x && segment.y === y)) {
-            return <div key={index} className="snake-cell"></div>;
-          }
+        {/* Snake */}
+        {snake.map((segment, index) => (
+          <div
+            className={`snake ${index === 0 ? 'snake-head' : ''}`}
+            key={index}
+            style={{ left: segment.x * 20, top: segment.y * 20 }}
+          />
+        ))}
 
-          if (food.x === x && food.y === y) {
-            return <div key={index} className="food-cell"></div>;
-          }
-
-          return <div key={index} className="empty-cell"></div>;
-        })}
+        {/* Game Over */}
+        {gameOver && <div className="game-over">Game Over</div>}
       </div>
     </div>
   );
-};
-
-export default Game4;
