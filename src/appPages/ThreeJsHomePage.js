@@ -17,7 +17,7 @@ const randomColor = () => {
 const generateShapes = () => {
   const shapes = [];
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 100000000; i++) {
     shapes.push(
       <Icosahedron key={i} position={[randomPos(), randomPos(), randomPos()]} args={[0.5, 1]}>
         <meshStandardMaterial
