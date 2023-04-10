@@ -76,7 +76,4 @@ const ThreeJsHomePage = () => {
   );
 };
 
-export
-
-
 export default ThreeJsHomePage;
