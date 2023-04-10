@@ -46,14 +46,28 @@ const ThreeJsHomePage = () => {
   });
 
   return (
-    <group ref={spaceshipRef}>
-      <Cylinder args={[0.5, 0.5, 2, 32]} castShadow>
-        <meshBasicMaterial attach="material" color="yellow" />
-      </Cylinder>
-      <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
-        <meshBasicMaterial attach="material" color="red" />
-      </Cone>
-    </group>
+<group ref={spaceshipRef}>
+  <points>
+    <geometry
+      vertices={[
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(0, 0.5, 0),
+        new THREE.Vector3(0.2, 0.2, 0),
+        new THREE.Vector3(0.5, 0, 0),
+        new THREE.Vector3(0.2, -0.2, 0),
+        new THREE.Vector3(0, -0.5, 0),
+        new THREE.Vector3(-0.2, -0.2, 0),
+        new THREE.Vector3(-0.5, 0, 0),
+        new THREE.Vector3(-0.2, 0.2, 0),
+      ]}
+      attach="geometry"
+    />
+    <pointsMaterial color="yellow" />
+    </points>
+    <Cone args={[0.5, 1, 5]} position={[0, 1, 0]} castShadow>
+      <meshBasicMaterial attach="material" color="red" />
+    </Cone>
+  </group>
   );
 };
 
