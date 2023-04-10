@@ -57,16 +57,27 @@ const Game2 = () => {
           );
         }
         setFlippedCards([]);
-      }, 2000);
+      }, 1500);
     }
   }, [flippedCards, cards]);
 
   const handleCardClick = (index) => {
     if (flippedCards.length < 2) {
-      setCards(cards.map((card, i) => (i === index ? { ...card, flipped: true } : card)));
-      setFlippedCards([...flippedCards, { card: cards[index], index }]);
+      setCards((prevCards) => {
+        const updatedCards = prevCards.map((card, i) =>
+          i === index ? { ...card, flipped: true } : card
+        );
+  
+        setFlippedCards((prevFlippedCards) => [
+          ...prevFlippedCards,
+          { card: updatedCards[index], index },
+        ]);
+  
+        return updatedCards;
+      });
     }
   };
+  
 
   return (
     <div>
