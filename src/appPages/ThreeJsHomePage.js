@@ -1,6 +1,7 @@
 // ThreeJsHomePage.js
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { CylinderBufferGeometry, ConeBufferGeometry } from 'three';
 
 const Spaceship = () => {
   return (
