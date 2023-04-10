@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Icosahedron } from '@react-three/drei';
+import * as THREE from 'three';
+
 
 const ThreeJsHomePage = () => {
   const starRef = useRef();
