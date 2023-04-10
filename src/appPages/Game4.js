@@ -61,7 +61,8 @@ const handleMove = useCallback((moveEvent) => {
       setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
     }
   }
-}, []);
+}, [gameOver, startX, startY]);
+
 
 
 const moveSnake = useCallback(() => {
