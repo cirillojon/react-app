@@ -1,12 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Cylinder, Cone } from '@react-three/drei';
+import * as THREE from 'three';
+import { BoxBufferGeometry, MeshStandardMaterial } from 'three';
+import { Cone } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
+
+  const cubeGeometry = new BoxBufferGeometry(1, 1, 1); // create a BoxBufferGeometry instance
+  const cubeMaterial = new MeshStandardMaterial({ color: 'hotpink' }); // create a MeshStandardMaterial instance
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -45,29 +50,31 @@ const ThreeJsHomePage = () => {
     }
   });
 
+
   return (
-<group ref={spaceshipRef}>
-  <points>
-    <geometry
-      vertices={[
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(0, 0.5, 0),
-        new THREE.Vector3(0.2, 0.2, 0),
-        new THREE.Vector3(0.5, 0, 0),
-        new THREE.Vector3(0.2, -0.2, 0),
-        new THREE.Vector3(0, -0.5, 0),
-        new THREE.Vector3(-0.2, -0.2, 0),
-        new THREE.Vector3(-0.5, 0, 0),
-        new THREE.Vector3(-0.2, 0.2, 0),
-      ]}
-      attach="geometry"
-    />
-    <pointsMaterial color="yellow" />
-    </points>
-    <Cone args={[0.5, 1, 5]} position={[0, 1, 0]} castShadow>
-      <meshBasicMaterial attach="material" color="red" />
-    </Cone>
-  </group>
+    <group ref={spaceshipRef}>
+      <points>
+        <geometry
+          vertices={[
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0.5, 0),
+            new THREE.Vector3(0.2, 0.2, 0),
+            new THREE.Vector3(0.5, 0, 0),
+            new THREE.Vector3(0.2, -0.2, 0),
+            new THREE.Vector3(0, -0.5, 0),
+            new THREE.Vector3(-0.2, -0.2, 0),
+            new THREE.Vector3(-0.5, 0, 0),
+            new THREE.Vector3(-0.2, 0.2, 0),
+          ]}
+          attach="geometry"
+        />
+        <pointsMaterial color="yellow" />
+      </points>
+      <mesh geometry={cubeGeometry} material={cubeMaterial} position={[0, 0, -2]} />
+      <Cone args={[0.5, 1, 5]} position={[0, 1, 0]} castShadow>
+        <meshBasicMaterial attach="material" color="red" />
+      </Cone>
+    </group>
   );
 };
 
