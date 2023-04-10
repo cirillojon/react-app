@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import './Game1.css';
 
 const Square = ({ value, onClick }) => {
@@ -9,32 +9,11 @@ const Square = ({ value, onClick }) => {
   );
 };
 
+
+
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
-
-  useEffect(() => {
-    if (!isXNext && !calculateWinner(squares)) {
-      const emptySquareIndex = getRandomEmptySquareIndex(squares);
-      if (emptySquareIndex !== null) {
-        setTimeout(() => {
-          handleClick(emptySquareIndex);
-        }, 1000); // Wait 1 second before making the AI move
-      }
-    }
-  }, [squares, isXNext]);
-
-  const getRandomEmptySquareIndex = (squares) => {
-    const emptySquares = squares
-      .map((value, index) => (value === null ? index : null))
-      .filter((index) => index !== null);
-
-    if (emptySquares.length === 0) {
-      return null;
-    }
-
-    return emptySquares[Math.floor(Math.random() * emptySquares.length)];
-  };
 
   const handleClick = (i) => {
     if (!isXNext) {
@@ -49,6 +28,34 @@ const Board = () => {
     newSquares[i] = isXNext ? "X" : "O";
     setSquares(newSquares);
     setIsXNext(!isXNext);
+  };
+  
+  const handleAIMove = useCallback(() => {
+    const emptySquareIndex = getRandomEmptySquareIndex(squares);
+    if (emptySquareIndex !== null) {
+      handleClick(emptySquareIndex);
+    }
+  }, [squares, handleClick]);
+
+  useEffect(() => {
+    if (!isXNext && !calculateWinner(squares)) {
+      setTimeout(() => {
+        handleAIMove();
+      }, 1000); // Wait 1 second before making the AI move
+    }
+  }, [squares, isXNext, handleAIMove]);
+  
+
+  const getRandomEmptySquareIndex = (squares) => {
+    const emptySquares = squares
+      .map((value, index) => (value === null ? index : null))
+      .filter((index) => index !== null);
+
+    if (emptySquares.length === 0) {
+      return null;
+    }
+
+    return emptySquares[Math.floor(Math.random() * emptySquares.length)];
   };
 
   const renderSquare = (i) => {
