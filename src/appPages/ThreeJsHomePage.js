@@ -20,16 +20,16 @@ const ThreeJsHomePage = () => {
     setPointerDown(false);
   };
 
-  const handlePointerMove = (event) => {
-    if (!pointerDown) return;
-    const dx = event.clientX - pointerPos.x;
-    const dy = event.clientY - pointerPos.y;
-    setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
-    setPointerPos({ x: event.clientX, y: event.clientY });
-    setMove(true);
-  };
-
   useEffect(() => {
+    const handlePointerMove = (event) => {
+      if (!pointerDown) return;
+      const dx = event.clientX - pointerPos.x;
+      const dy = event.clientY - pointerPos.y;
+      setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
+      setPointerPos({ x: event.clientX, y: event.clientY });
+      setMove(true);
+    };
+  
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointermove', handlePointerMove);
@@ -38,7 +38,8 @@ const ThreeJsHomePage = () => {
       window.removeEventListener('pointerup', handlePointerUp);
       window.removeEventListener('pointermove', handlePointerMove);
     };
-  }, []);
+  }, [handlePointerDown, handlePointerUp, pointerDown, pointerPos]);
+  
 
   useFrame(({ clock }) => {
     if (starRef.current) {
