@@ -34,9 +34,16 @@ const Board = () => {
   const handleAIMove = useCallback(() => {
     const emptySquareIndex = getRandomEmptySquareIndex(squares);
     if (emptySquareIndex !== null) {
-      handleClick(emptySquareIndex);
+      const newSquares = squares.slice();
+      if (newSquares[emptySquareIndex] || calculateWinner(newSquares)) {
+        return;
+      }
+      newSquares[emptySquareIndex] = isXNext ? "X" : "O";
+      setSquares(newSquares);
+      setIsXNext(!isXNext);
     }
-  }, [squares, handleClick]);
+  }, [squares, isXNext]);
+  
 
   useEffect(() => {
     if (!isXNext && !calculateWinner(squares)) {
