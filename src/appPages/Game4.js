@@ -9,6 +9,9 @@ const Game4 = () => {
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
     const [speed] = useState(100);
+    const [startX, setStartX] = useState(null);
+    const [startY, setStartY] = useState(null);
+
 
   const changeDirection = useCallback((event) => {
   switch (event.key) {
@@ -30,9 +33,10 @@ const Game4 = () => {
 }, []);
 
 const handleTouch = useCallback((event) => {
-  startX = event.touches[0].clientX;
-  startY = event.touches[0].clientY;
+  setStartX(event.touches[0].clientX);
+  setStartY(event.touches[0].clientY);
 }, []);
+
 
 const handleMove = useCallback((moveEvent) => {
   if (gameOver) return;
@@ -58,6 +62,51 @@ const handleMove = useCallback((moveEvent) => {
     }
   }
 }, []);
+
+
+const moveSnake = useCallback(() => {
+  if (gameOver) return;
+
+  const head = snake[0];
+  const newHead = { x: head.x, y: head.y };
+
+  switch (direction) {
+    case 'UP':
+      newHead.y -= 1;
+      break;
+    case 'DOWN':
+      newHead.y += 1;
+      break;
+    case 'LEFT':
+      newHead.x -= 1;
+      break;
+    case 'RIGHT':
+      newHead.x += 1;
+      break;
+    default:
+      break;
+  }
+
+  if (
+    newHead.x < 0 ||
+    newHead.x >= 20 ||
+    newHead.y < 0 ||
+    newHead.y >= 20 ||
+    snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
+  ) {
+    setGameOver(true);
+    return;
+  }
+
+  const newSnake = [newHead, ...snake];
+  if (newHead.x === food.x && newHead.y === food.y) {
+    setFood({ x: getRandomPosition(20), y: getRandomPosition(20) });
+  } else {
+    newSnake.pop();
+  }
+  setSnake(newSnake);
+}, [snake, food, direction, setSnake, setFood, setGameOver, gameOver]);
+
 
 
   useEffect(() => {
