@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Routes from "./routes";
 import Navbar from "./Navbar";
-import LambdaDemo from "./LambdaDemo"; 
+// import LambdaDemo from "./LambdaDemo"; 
 import './theme.css';
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <Routes />
-        <LambdaDemo />
+        {/* <LambdaDemo /> */}
       </div>
     );
   }
