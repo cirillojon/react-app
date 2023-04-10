@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Icosahedron, PointLight } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Icosahedron } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const starRef = useRef();
+  const { scene } = useThree();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
@@ -45,6 +46,11 @@ const ThreeJsHomePage = () => {
     }
   });
 
+  useEffect(() => {
+    const pointLight = new THREE.PointLight('yellow', 5, 5);
+    starRef.current.add(pointLight);
+  }, [scene]);
+
   return (
     <group ref={starRef}>
       <Icosahedron args={[1, 2]} castShadow>
@@ -55,7 +61,6 @@ const ThreeJsHomePage = () => {
           emissiveIntensity={1}
         />
       </Icosahedron>
-      <PointLight color="yellow" distance={5} intensity={5} />
     </group>
   );
 };
