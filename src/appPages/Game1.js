@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import './Game1.css';
 
 const Square = ({ value, onClick }) => {
@@ -9,7 +9,11 @@ const Square = ({ value, onClick }) => {
   );
 };
 
-
+const handleAIMove = useCallback(() => {
+  if (isXNext) {
+    // Don't make a move when it's the player's turn
+    return;
+  }
 
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
@@ -37,13 +41,6 @@ const Board = () => {
   },
   [isXNext, squares, handleAIMove]
 );
-  
-
-  const handleAIMove = useCallback(() => {
-  if (isXNext) {
-    // Don't make a move when it's the player's turn
-    return;
-  }
 
   const emptySquareIndex = getRandomEmptySquareIndex(squares);
   if (emptySquareIndex !== null) {
