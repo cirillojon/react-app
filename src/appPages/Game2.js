@@ -23,7 +23,7 @@ const shuffleArray = (array) => {
 };
 
 const generateCards = () => {
-  const values = 'ABCDEFGH';
+  const values = 'ABCDEF';
   const cards = values
     .split('')
     .concat(values.split(''))
