@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import './Game1.css';
+import React, { useState, useCallback, useEffect } from "react";
+import "./Game1.css";
 
 const Square = ({ value, onClick }) => {
   return (
@@ -9,62 +9,53 @@ const Square = ({ value, onClick }) => {
   );
 };
 
-const handleAIMove = useCallback(() => {
-  if (isXNext) {
-    // Don't make a move when it's the player's turn
-    return;
-  }
-
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
 
-  const handleClick = useCallback(
-  (i) => {
+  const handleAIMove = useCallback(() => {
+    if (isXNext) {
+      // Don't make a move when it's the player's turn
+      return;
+    }
+
+    const emptySquareIndex = getRandomEmptySquareIndex(squares);
+    if (emptySquareIndex !== null) {
+      const newSquares = squares.slice();
+      newSquares[emptySquareIndex] = isXNext ? "X" : "O";
+      setSquares(newSquares);
+      setIsXNext(!isXNext);
+    }
+  }, [squares, isXNext]);
+
+  useEffect(() => {
     if (!isXNext) {
-      // Don't allow clicks when it's not the player's turn
-      return;
+      // AI's turn
+      const timer = setTimeout(() => {
+        handleAIMove();
+      }, 1000); // Wait 1 second before making the AI move
+
+      return () => clearTimeout(timer);
     }
+  }, [squares, isXNext, handleAIMove]);
 
-    const newSquares = squares.slice();
-    if (newSquares[i] || calculateWinner(newSquares)) {
-      return;
-    }
-    newSquares[i] = isXNext ? "X" : "O";
-    setSquares(newSquares);
-    setIsXNext(!isXNext);
+  const handleClick = useCallback(
+    (i) => {
+      if (!isXNext) {
+        // Don't allow clicks when it's not the player's turn
+        return;
+      }
 
-    // AI's turn
-    setTimeout(() => {
-      handleAIMove();
-    }, 1000); // Wait 1 second before making the AI move
-  },
-  [isXNext, squares, handleAIMove]
-);
-
-  const emptySquareIndex = getRandomEmptySquareIndex(squares);
-  if (emptySquareIndex !== null) {
-    const newSquares = squares.slice();
-    if (newSquares[emptySquareIndex] || calculateWinner(newSquares)) {
-      return;
-    }
-    newSquares[emptySquareIndex] = isXNext ? "X" : "O";
-    setSquares(newSquares);
-    setIsXNext(!isXNext);
-  }
-}, [squares, isXNext]);
-
-  const getRandomEmptySquareIndex = (squares) => {
-    const emptySquares = squares
-      .map((value, index) => (value === null ? index : null))
-      .filter((index) => index !== null);
-
-    if (emptySquares.length === 0) {
-      return null;
-    }
-
-    return emptySquares[Math.floor(Math.random() * emptySquares.length)];
-  };
+      const newSquares = squares.slice();
+      if (newSquares[i] || calculateWinner(newSquares)) {
+        return;
+      }
+      newSquares[i] = isXNext ? "X" : "O";
+      setSquares(newSquares);
+      setIsXNext(!isXNext);
+    },
+    [squares, isXNext]
+  );
 
   const renderSquare = (i) => {
     return <Square value={squares[i]} onClick={() => handleClick(i)} />;
@@ -95,6 +86,17 @@ const Board = () => {
   );
 };
 
+const getRandomEmptySquareIndex = (squares) => {
+  const emptySquares = squares
+    .map((value, index) => (value === null ? index : null))
+    .filter((index) => index !== null);
+
+  if (emptySquares.length === 0) {
+    return null;
+  }
+
+  return emptySquares[Math.floor(Math.random() * emptySquares.length)];
+};
 
 const calculateWinner = (squares) => {
   const lines = [
