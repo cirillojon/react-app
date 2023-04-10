@@ -9,71 +9,106 @@ const Game4 = () => {
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
     const [speed] = useState(100);
+    const [startX, setStartX] = useState(null);
+    const [startY, setStartY] = useState(null);
 
-  const changeDirection = (event) => {
-    switch (event.key) {
-      case 'ArrowUp':
-        setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
-        break;
-      case 'ArrowDown':
-        setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
-        break;
-      case 'ArrowLeft':
-        setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
-        break;
-      case 'ArrowRight':
-        setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-        break;
-      default:
-        break;
+
+  const changeDirection = useCallback((event) => {
+  switch (event.key) {
+    case 'ArrowUp':
+      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+      break;
+    case 'ArrowDown':
+      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+      break;
+    case 'ArrowLeft':
+      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+      break;
+    case 'ArrowRight':
+      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+      break;
+    default:
+      break;
+  }
+}, []);
+
+const handleTouch = useCallback((event) => {
+  setStartX(event.touches[0].clientX);
+  setStartY(event.touches[0].clientY);
+}, []);
+
+
+const handleMove = useCallback((moveEvent) => {
+  if (gameOver) return;
+
+  moveEvent.preventDefault();
+  const moveX = moveEvent.touches[0].clientX;
+  const moveY = moveEvent.touches[0].clientY;
+
+  const diffX = moveX - startX;
+  const diffY = moveY - startY;
+
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX > 0) {
+      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+    } else {
+      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
     }
-  };
+  } else {
+    if (diffY > 0) {
+      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+    } else {
+      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+    }
+  }
+}, [gameOver, startX, startY]);
 
-   const moveSnake = useCallback(() => {
-    setSnake((prev) => {
-      const newSnake = [...prev];
-      let newX = newSnake[0].x;
-      let newY = newSnake[0].y;
 
-      switch (direction) {
-        case 'UP':
-          newY -= 1;
-          break;
-        case 'DOWN':
-          newY += 1;
-          break;
-        case 'LEFT':
-          newX -= 1;
-          break;
-        case 'RIGHT':
-          newX += 1;
-          break;
-        default:
-          break;
-      }
 
-      if (
-        newX < 0 ||
-        newX >= 20 ||
-        newY < 0 ||
-        newY >= 20 ||
-        newSnake.some((segment) => segment.x === newX && segment.y === newY)
-      ) {
-        setGameOver(true);
-        return prev;
-      }
+const moveSnake = useCallback(() => {
+  if (gameOver) return;
 
-      newSnake.unshift({ x: newX, y: newY });
+  const head = snake[0];
+  const newHead = { x: head.x, y: head.y };
 
-      if (newX === food.x && newY === food.y) {
-        setFood({ x: getRandomPosition(20), y: getRandomPosition(20) });
-      } else {
-        newSnake.pop();
-      }
+  switch (direction) {
+    case 'UP':
+      newHead.y -= 1;
+      break;
+    case 'DOWN':
+      newHead.y += 1;
+      break;
+    case 'LEFT':
+      newHead.x -= 1;
+      break;
+    case 'RIGHT':
+      newHead.x += 1;
+      break;
+    default:
+      break;
+  }
 
-      return newSnake;
-    });
-  },[food, direction]);
+  if (
+    newHead.x < 0 ||
+    newHead.x >= 20 ||
+    newHead.y < 0 ||
+    newHead.y >= 20 ||
+    snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
+  ) {
+    setGameOver(true);
+    return;
+  }
+
+  const newSnake = [newHead, ...snake];
+  if (newHead.x === food.x && newHead.y === food.y) {
+    setFood({ x: getRandomPosition(20), y: getRandomPosition(20) });
+  } else {
+    newSnake.pop();
+  }
+  setSnake(newSnake);
+}, [snake, food, direction, setSnake, setFood, setGameOver, gameOver]);
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -84,9 +119,15 @@ const Game4 = () => {
   
 
   useEffect(() => {
-    window.addEventListener('keydown', changeDirection);
-    return () => window.removeEventListener('keydown', changeDirection);
-  }, []);
+  window.addEventListener('keydown', changeDirection);
+  window.addEventListener('touchstart', handleTouch);
+  window.addEventListener('touchmove', handleMove);
+  return () => {
+    window.removeEventListener('keydown', changeDirection);
+    window.removeEventListener('touchstart', handleTouch);
+    window.removeEventListener('touchmove', handleMove);
+  };
+}, [changeDirection, handleTouch, handleMove]);
 
   return (
     <div className="game4">
