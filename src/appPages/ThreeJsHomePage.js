@@ -1,28 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useTrail, a } from '@react-spring/three';
-import { Star } from '@react-three/drei';
-
-const TrailStar = ({ count, children, ...props }) => {
-  const [trail, setTrail] = useTrail(count, () => ({
-    scale: [1, 1, 1],
-    config: { mass: 10, tension: 1000, friction: 200 },
-  }));
-
-  useEffect(() => {
-    setTrail({ scale: [1.2, 1.2, 1.2] });
-  }, [setTrail]);
-
-  return (
-    <>
-      {trail.map((style, index) => (
-        <a.group key={index} {...props} scale={style.scale}>
-          {children}
-        </a.group>
-      ))}
-    </>
-  );
-};
+import { Icosahedron } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const starRef = useRef();
@@ -68,11 +46,14 @@ const ThreeJsHomePage = () => {
   });
 
   return (
-    <TrailStar ref={starRef} count={1}>
-      <Star radius={1} spikes={5} innerRadius={0.4} outerRadius={1} castShadow>
-        <meshBasicMaterial attach="material" color="yellow" />
-      </Star>
-    </TrailStar>
+    <Icosahedron ref={starRef} args={[1, 2]} castShadow>
+      <meshStandardMaterial
+        attach="material"
+        color="yellow"
+        emissive="yellow"
+        emissiveIntensity={0.5}
+      />
+    </Icosahedron>
   );
 };
 
