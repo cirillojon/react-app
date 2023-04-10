@@ -1,9 +1,31 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Cylinder, Cone } from '@react-three/drei';
+import { useTrail, a } from '@react-spring/three';
+import { Star } from 'drei';
+
+const TrailStar = ({ count, children, ...props }) => {
+  const [trail, setTrail] = useTrail(count, () => ({
+    scale: [1, 1, 1],
+    config: { mass: 10, tension: 1000, friction: 200 },
+  }));
+
+  useEffect(() => {
+    setTrail({ scale: [1.2, 1.2, 1.2] });
+  }, [setTrail]);
+
+  return (
+    <>
+      {trail.map((style, index) => (
+        <a.group key={index} {...props} scale={style.scale}>
+          {children}
+        </a.group>
+      ))}
+    </>
+  );
+};
 
 const ThreeJsHomePage = () => {
-  const spaceshipRef = useRef();
+  const starRef = useRef();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
@@ -36,25 +58,25 @@ const ThreeJsHomePage = () => {
   }, []);
 
   useFrame(({ clock }) => {
-    if (spaceshipRef.current) {
+    if (starRef.current) {
       const speed = move ? 0.2 : 0.1;
       const { x, y } = rotate;
-      spaceshipRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
-      spaceshipRef.current.translateZ(-speed);
+      starRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
+      starRef.current.translateZ(-speed);
       setMove(false);
     }
   });
 
   return (
-    <group ref={spaceshipRef}>
-      <Cylinder args={[0.5, 0.5, 2, 32]} castShadow>
+    <TrailStar ref={starRef} count={1}>
+      <Star radius={1} spikes={5} innerRadius={0.4} outerRadius={1} castShadow>
         <meshBasicMaterial attach="material" color="yellow" />
-      </Cylinder>
-      <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
-        <meshBasicMaterial attach="material" color="red" />
-      </Cone>
-    </group>
+      </Star>
+    </TrailStar>
   );
 };
+
+export
+
 
 export default ThreeJsHomePage;
