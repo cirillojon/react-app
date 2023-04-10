@@ -6,7 +6,6 @@ const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
-  const [move, setMove] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -15,7 +14,6 @@ const ThreeJsHomePage = () => {
       const dy = event.clientY - y;
       setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
       mouseRef.current = { x: event.clientX, y: event.clientY };
-      setMove(true);
     };
 
     const handleTouchMove = (event) => {
@@ -24,7 +22,6 @@ const ThreeJsHomePage = () => {
       const dy = event.touches[0].clientY - y;
       setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
       mouseRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-      setMove(true);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -37,24 +34,26 @@ const ThreeJsHomePage = () => {
 
   useFrame(({ clock }) => {
     if (spaceshipRef.current) {
-      const speed = move ? 0.2 : 0.1;
+      const speed = 0.1;
       const { x, y } = rotate;
       spaceshipRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
       spaceshipRef.current.translateZ(-speed);
-      setMove(false);
     }
   });
-
+  
   return (
     <group ref={spaceshipRef}>
       <Cylinder args={[0.5, 0.5, 2, 32]} castShadow>
-        <meshBasicMaterial attach="material" color="yellow" />
+        <meshStandardMaterial attach="material" map={metalTexture} />
       </Cylinder>
       <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
-        <meshBasicMaterial attach="material" color="red" />
+        <meshStandardMaterial attach="material" map={reflectiveTexture} />
       </Cone>
+      <PointLight color="white" position={[0, 1, 0]} intensity={1} />
     </group>
   );
 };
+const metalTexture = new THREE.TextureLoader().load('/metal.jpg');
+const reflectiveTexture = new THREE.TextureLoader().load('/reflective.jpg');
 
 export default ThreeJsHomePage;
