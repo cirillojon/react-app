@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Game2.css';
 
 const MemoryCard = ({ card, onClick }) => {
   return (
@@ -22,7 +23,7 @@ const shuffleArray = (array) => {
 };
 
 const generateCards = () => {
-  const values = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const values = 'ABCDEFGH';
   const cards = values
     .split('')
     .concat(values.split(''))
@@ -56,7 +57,7 @@ const Game2 = () => {
           );
         }
         setFlippedCards([]);
-      }, 1000);
+      }, 2000);
     }
   }, [flippedCards, cards]);
 
