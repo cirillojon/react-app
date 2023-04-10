@@ -55,7 +55,7 @@ const ThreeJsHomePage = () => {
   );
 };
 
-const metalTexture = new THREE.TextureLoader().load('/metal.jpg');
-const reflectiveTexture = new THREE.TextureLoader().load('/reflective.jpg');
+const metalTexture = new THREE.MeshStandardMaterial({ color: 'gray' });
+const reflectiveTexture = new THREE.MeshStandardMaterial({ color: 'white' });
 
 export default ThreeJsHomePage;
