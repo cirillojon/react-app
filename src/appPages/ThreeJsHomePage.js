@@ -3,19 +3,20 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
 const ThreeJsHomePage = () => {
-  const starRef = useRef();
+  const spaceshipRef = useRef();
 
   useFrame((state) => {
-    if (starRef.current) {
+    if (spaceshipRef.current) {
       const time = state.clock.getElapsedTime();
-      starRef.current.position.x = Math.sin(time) * 10;
-      starRef.current.position.y = Math.cos(time) * 10;
+      spaceshipRef.current.position.x = (Math.sin(time) * 5) - 5;
+      spaceshipRef.current.position.y = Math.cos(time) * 2;
+      spaceshipRef.current.rotation.z = Math.PI / 2 + Math.sin(time) * 0.1;
     }
   });
 
   return (
-    <mesh ref={starRef}>
-      <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32]} />
+    <mesh ref={spaceshipRef}>
+      <coneBufferGeometry attach="geometry" args={[0.5, 2, 32]} />
       <meshBasicMaterial attach="material" color="yellow" />
     </mesh>
   );
