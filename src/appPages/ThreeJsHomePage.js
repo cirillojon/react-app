@@ -1,17 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
-import { MeshStandardMaterial } from 'three';
-import { Cone } from '@react-three/drei';
+import { Cylinder, Cone } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
-
-  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // create a BoxGeometry instance
-  const cubeMaterial = new MeshStandardMaterial({ color: 'hotpink' }); // create a MeshStandardMaterial instance
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -32,16 +27,11 @@ const ThreeJsHomePage = () => {
       setMove(true);
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('touchmove', handleTouchMove);
-    }
-
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove);
     return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('touchmove', handleTouchMove);
-      }
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
 
@@ -57,29 +47,14 @@ const ThreeJsHomePage = () => {
 
   return (
     <group ref={spaceshipRef}>
-      <points>
-        <geometry
-          vertices={[
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(0, 0.5, 0),
-            new THREE.Vector3(0.2, 0.2, 0),
-            new THREE.Vector3(0.5, 0, 0),
-            new THREE.Vector3(0.2, -0.2, 0),
-            new THREE.Vector3(0, -0.5, 0),
-            new THREE.Vector3(-0.2, -0.2, 0),
-            new THREE.Vector3(-0.5, 0, 0),
-            new THREE.Vector3(-0.2, 0.2, 0),
-            ]}
-            attach="geometry"
-            />
-            <pointsMaterial color="yellow" />
-            </points>
-            <mesh geometry={cubeGeometry} material={cubeMaterial} position={[-1.5, 0, 0]} castShadow />
-            <Cone args={[0.5, 1, 5]} position={[0, 1, 0]} castShadow>
-            <meshBasicMaterial attach="material" color="red" />
-            </Cone>
-            </group>
-            );
-            };
-            
-            export default ThreeJsHomePage;
+      <Cylinder args={[0.5, 0.5, 2, 32]} castShadow>
+        <meshBasicMaterial attach="material" color="yellow" />
+      </Cylinder>
+      <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
+        <meshBasicMaterial attach="material" color="red" />
+      </Cone>
+    </group>
+  );
+};
+
+export default ThreeJsHomePage;
