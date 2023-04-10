@@ -3,21 +3,20 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
 const ThreeJsHomePage = () => {
-  const meshRef = useRef();
+  const starRef = useRef();
 
   useFrame((state) => {
-    if (meshRef.current) {
+    if (starRef.current) {
       const time = state.clock.getElapsedTime();
-      meshRef.current.rotation.x = Math.sin(time) * 0.5;
-      meshRef.current.rotation.y = Math.sin(time * 1.5) * 0.5;
-      meshRef.current.rotation.z = Math.sin(time * 0.75) * 0.5;
+      starRef.current.position.x = Math.sin(time) * 10;
+      starRef.current.position.y = Math.cos(time) * 10;
     }
   });
 
   return (
-    <mesh ref={meshRef} scale={[5, 5, 5]}>
-      <torusKnotBufferGeometry attach="geometry" args={[1, 0.4, 64, 16]} />
-      <meshStandardMaterial attach="material" color="hotpink" />
+    <mesh ref={starRef}>
+      <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32]} />
+      <meshBasicMaterial attach="material" color="yellow" />
     </mesh>
   );
 };
