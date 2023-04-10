@@ -1,3 +1,4 @@
+// ThreeJsHomePage.js
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Cylinder, Cone } from '@react-three/drei';
@@ -50,10 +51,10 @@ const ThreeJsHomePage = () => {
   return (
     <group ref={spaceshipRef}>
       <Cylinder args={[0.5, 0.5, 2, 32]} castShadow>
-        <meshBasicMaterial attach="material" color="yellow" />
+        <meshStandardMaterial attach="material" color="yellow" /> {/* Change to meshStandardMaterial */}
       </Cylinder>
       <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
-      <meshBasicMaterial attach="material" color="red" />
+        <meshStandardMaterial attach="material" color="red" /> {/* Change to meshStandardMaterial */}
       </Cone>
       <SmokeEffect count={500} color="white" />
     </group>
