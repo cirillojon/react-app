@@ -1,7 +1,7 @@
 // HomePage.js
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import threeJsHome from './threeJsHome';
+import ThreeJsHomePage from './ThreeJsHomePage';
 
 const HomePage = () => {
   return (
@@ -11,7 +11,7 @@ const HomePage = () => {
       <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <threeJsHome />
+        <ThreeJsHomePage />
       </Canvas>
     </div>
   );

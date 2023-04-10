@@ -1,8 +1,8 @@
-// threeJsHome.js
+// ThreeJsHomePage.js
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
-const threeJsHome = () => {
+const ThreeJsHomePage = () => {
   const meshRef = useRef();
 
   useFrame((state) => {
@@ -22,4 +22,4 @@ const threeJsHome = () => {
   );
 };
 
-export default threeJsHome;
+export default ThreeJsHomePage;
