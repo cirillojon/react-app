@@ -28,6 +28,39 @@ const Game4 = () => {
         break;
     }
   };
+  
+  const handleTouch = (event) => {
+    const startX = event.touches[0].clientX;
+    const startY = event.touches[0].clientY;
+
+    const handleMove = (moveEvent) => {
+      moveEvent.preventDefault();
+      const moveX = moveEvent.touches[0].clientX;
+      const moveY = moveEvent.touches[0].clientY;
+
+      const diffX = moveX - startX;
+      const diffY = moveY - startY;
+
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+          setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+        } else {
+          setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+        }
+      } else {
+        if (diffY > 0) {
+          setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+        } else {
+          setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+        }
+      }
+
+      window.removeEventListener('touchmove', handleMove);
+    };
+
+    window.addEventListener('touchmove', handleMove);
+  };
+
 
    const moveSnake = useCallback(() => {
     setSnake((prev) => {
@@ -85,8 +118,13 @@ const Game4 = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', changeDirection);
-    return () => window.removeEventListener('keydown', changeDirection);
+    window.addEventListener('touchstart', handleTouch);
+    return () => {
+      window.removeEventListener('keydown', changeDirection);
+      window.removeEventListener('touchstart', handleTouch);
+    };
   }, []);
+
 
   return (
     <div className="game4">
