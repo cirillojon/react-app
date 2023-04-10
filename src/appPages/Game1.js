@@ -120,11 +120,14 @@ const calculateWinner = (squares) => {
 
 const Game1 = () => {
   return (
-    <div>
-      <h1>Tic-Tac-Toe</h1>
-      <Board />
+    <div className="game-wrapper">
+      <div>
+        <h1>Tic-Tac-Toe</h1>
+        <Board />
+      </div>
     </div>
   );
 };
+
 
 export default Game1;
