@@ -42,11 +42,11 @@ const ThreeJsHomePage = () => {
   }, [handlePointerDown, handlePointerUp, pointerDown, pointerPos]);
   
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (starRef.current) {
       const speed = move ? 0.2 : 0.1;
       const { x, y } = rotate;
-      starRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
+      starRef.current.rotation.set(x, y, 0);
       
       const objectZPosition = starRef.current.position.z;
       const halfCanvasSize = size.width / 2;
@@ -60,6 +60,7 @@ const ThreeJsHomePage = () => {
       setMove(false);
     }
   });
+  
   
 
   useEffect(() => {
