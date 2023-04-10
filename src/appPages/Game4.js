@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Game4.css';
 
 const getRandomPosition = (gridSize) => Math.floor(Math.random() * gridSize);
@@ -30,12 +30,13 @@ const Game4 = () => {
   }
 }, []);
 
-
 const handleClick = useCallback(
     (clickEvent) => {
       if (gameOver) return;
   
-      const rect = clickEvent.target.getBoundingClientRect();
+      if (!gridRef.current) return;
+  
+      const rect = gridRef.current.getBoundingClientRect();
       const clickX = clickEvent.clientX - rect.left;
       const clickY = clickEvent.clientY - rect.top;
   
@@ -61,6 +62,7 @@ const handleClick = useCallback(
     },
     [gameOver, snake]
   );
+  
   
   
 const moveSnake = useCallback(() => {
@@ -124,10 +126,10 @@ useEffect(() => {
 
   return (
     <div className="game4">
-      <h1>Snake Game</h1>
-      {gameOver ? <h2>Game Over!</h2> : null}
-      <div className="game4-grid" onClick={handleClick}>
-        {Array.from({ length: 20 * 20 }, (_, index) => {
+    <h1>Snake Game</h1>
+    {gameOver ? <h2>Game Over!</h2> : null}
+    <div ref={gridRef} className="game4-grid" onClick={handleClick}>
+      {Array.from({ length: 20 * 20 }, (_, index) => {
           const x = index % 20;
           const y = Math.floor(index / 20);
 
