@@ -3,38 +3,40 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
 
-
 const ThreeJsHomePage = () => {
   const starRef = useRef();
   const { scene } = useThree();
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  const mouseRef = useRef({ x: 0, y: 0 });
   const [move, setMove] = useState(false);
+  const [pointerDown, setPointerDown] = useState(false);
+  const [pointerPos, setPointerPos] = useState({ x: 0, y: 0 });
+
+  const handlePointerDown = (event) => {
+    setPointerDown(true);
+    setPointerPos({ x: event.clientX, y: event.clientY });
+  };
+
+  const handlePointerUp = () => {
+    setPointerDown(false);
+  };
+
+  const handlePointerMove = (event) => {
+    if (!pointerDown) return;
+    const dx = event.clientX - pointerPos.x;
+    const dy = event.clientY - pointerPos.y;
+    setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
+    setPointerPos({ x: event.clientX, y: event.clientY });
+    setMove(true);
+  };
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      const { x, y } = mouseRef.current;
-      const dx = event.clientX - x;
-      const dy = event.clientY - y;
-      setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
-      mouseRef.current = { x: event.clientX, y: event.clientY };
-      setMove(true);
-    };
-
-    const handleTouchMove = (event) => {
-      const { x, y } = mouseRef.current;
-      const dx = event.touches[0].clientX - x;
-      const dy = event.touches[0].clientY - y;
-      setRotate((r) => ({ x: r.x - dy * 0.01, y: r.y - dx * 0.01 }));
-      mouseRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-      setMove(true);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointermove', handlePointerMove);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
 
