@@ -39,11 +39,11 @@ const handleClick = useCallback(
       const clickX = clickEvent.clientX - rect.left;
       const clickY = clickEvent.clientY - rect.top;
   
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+      const headX = snake[0].x * 25; // Multiply by cell size (20px) + cell border (5px)
+      const headY = snake[0].y * 25;
   
-      const diffX = clickX - centerX;
-      const diffY = clickY - centerY;
+      const diffX = clickX - headX;
+      const diffY = clickY - headY;
   
       if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) {
@@ -59,8 +59,9 @@ const handleClick = useCallback(
         }
       }
     },
-    [gameOver]
+    [gameOver, snake]
   );
+  
   
 const moveSnake = useCallback(() => {
   if (gameOver) return;
