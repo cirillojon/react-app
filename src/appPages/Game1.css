@@ -24,7 +24,9 @@
     text-align: center;
     line-height: 100px;
     margin: -1px 0 0 -1px;
+    color: #000; /* Add this line to change the text color */
   }
+  
   
   .square:hover {
     background-color: rgba(0, 0, 0, 0.05);

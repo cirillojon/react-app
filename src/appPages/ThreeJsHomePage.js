@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Cylinder, Cone } from '@react-three/drei';
+import SmokeEffect from './SmokeEffect';
 
 const ThreeJsHomePage = () => {
   const spaceshipRef = useRef();
@@ -22,6 +23,7 @@ const ThreeJsHomePage = () => {
       <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
         <meshBasicMaterial attach="material" color="red" />
       </Cone>
+      <SmokeEffect count={500} color="white" />
     </group>
   );
 };
