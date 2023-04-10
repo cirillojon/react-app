@@ -10,29 +10,31 @@ const Game4 = () => {
     const [gameOver, setGameOver] = useState(false);
     const [speed] = useState(100);
 
-  const changeDirection = (event) => {
-    switch (event.key) {
-      case 'ArrowUp':
-        setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
-        break;
-      case 'ArrowDown':
-        setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
-        break;
-      case 'ArrowLeft':
-        setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
-        break;
-      case 'ArrowRight':
-        setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-        break;
-      default:
-        break;
-    }
-  };
-  
-  let startX;
-  let startY;
-  
-  const handleMove = (moveEvent) => {
+  const changeDirection = useCallback((event) => {
+  switch (event.key) {
+    case 'ArrowUp':
+      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
+      break;
+    case 'ArrowDown':
+      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
+      break;
+    case 'ArrowLeft':
+      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
+      break;
+    case 'ArrowRight':
+      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
+      break;
+    default:
+      break;
+  }
+}, []);
+
+const handleTouch = useCallback((event) => {
+  startX = event.touches[0].clientX;
+  startY = event.touches[0].clientY;
+}, []);
+
+const handleMove = useCallback((moveEvent) => {
   if (gameOver) return;
 
   moveEvent.preventDefault();
@@ -55,58 +57,8 @@ const Game4 = () => {
       setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
     }
   }
-};
+}, []);
 
-const handleTouch = (event) => {
-  startX = event.touches[0].clientX;
-  startY = event.touches[0].clientY;
-};
-
-   const moveSnake = useCallback(() => {
-    setSnake((prev) => {
-      const newSnake = [...prev];
-      let newX = newSnake[0].x;
-      let newY = newSnake[0].y;
-
-      switch (direction) {
-        case 'UP':
-          newY -= 1;
-          break;
-        case 'DOWN':
-          newY += 1;
-          break;
-        case 'LEFT':
-          newX -= 1;
-          break;
-        case 'RIGHT':
-          newX += 1;
-          break;
-        default:
-          break;
-      }
-
-      if (
-        newX < 0 ||
-        newX >= 20 ||
-        newY < 0 ||
-        newY >= 20 ||
-        newSnake.some((segment) => segment.x === newX && segment.y === newY)
-      ) {
-        setGameOver(true);
-        return prev;
-      }
-
-      newSnake.unshift({ x: newX, y: newY });
-
-      if (newX === food.x && newY === food.y) {
-        setFood({ x: getRandomPosition(20), y: getRandomPosition(20) });
-      } else {
-        newSnake.pop();
-      }
-
-      return newSnake;
-    });
-  },[food, direction]);
 
   useEffect(() => {
     const interval = setInterval(() => {
