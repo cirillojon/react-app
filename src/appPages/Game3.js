@@ -1,3 +1,5 @@
+// Whac-A-Mole game
+
 import React, { useState, useEffect } from "react";
 import "./Game3.css";
 

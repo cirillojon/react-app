@@ -1,0 +1,46 @@
+.minigames {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .minigames h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .minigames h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .minigames p {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .minigames button {
+    font-size: 1rem;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #0066cc;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .minigames button:hover {
+    background-color: #0052a3;
+  }
+  
+  .minigames input[type="number"] {
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    width: 60px;
+  }
+  

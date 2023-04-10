@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Minigames.css";
 
 const choices = ["rock", "paper", "scissors"];
 
@@ -76,7 +77,7 @@ const Minigames = () => {
   };
 
   return (
-    <div>
+    <div className="minigames">
       <h1>Minigames</h1>
 
       <h2>Number Guessing Game</h2>
