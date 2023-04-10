@@ -71,14 +71,6 @@ const ThreeJsHomePage = () => {
     };
   }, [handlePointerDown, handlePointerUp, pointerDown, pointerPos]);
 
-
-  const [shapes, setShapes] = useState([]);
-
-  const frameCount = useRef(0);
-  const shapeCreationInterval = 50; // The interval between shape creations, in frames
-
-
-
   useFrame(() => {
     if (starRef.current) {
       const speed = move ? 0.2 : 0.1;
@@ -95,46 +87,27 @@ const ThreeJsHomePage = () => {
       }
 
       setMove(false);
-    // Shape generation code
-    frameCount.current++;
-
-    if (frameCount.current >= shapeCreationInterval) {
-      frameCount.current = 0;
-      const newShape = (
-        <Icosahedron key={Date.now()} position={[randomPos(), randomPos(), randomPos()]} args={[0.5, 1]}>
-          <meshStandardMaterial
-            attach="material"
-            color={randomColor()}
-            emissive={randomColor()}
-            emissiveIntensity={0.5}
-          />
-        </Icosahedron>
-      );
-      setShapes([...shapes, newShape]);
     }
-  }
-});
+  });
 
   useEffect(() => {
     const pointLight = new THREE.PointLight('yellow', 5, 5);
     starRef.current.add(pointLight);
   }, [scene]);
 
-  return (
-    <group ref={starRef}>
-      <Icosahedron args={[1, 2]} castShadow>
-        <meshStandardMaterial
-          attach="material"
-          color="yellow"
-          emissive="yellow"
-          emissiveIntensity={1}
-        />
-      </Icosahedron>
-      <Stars />
-      {shapes}
-    </group>
-  );
-  
+  return (     <group ref={starRef}>
+    <Icosahedron args={[1, 2]} castShadow>
+      <meshStandardMaterial
+        attach="material"
+        color="yellow"
+        emissive="yellow"
+        emissiveIntensity={1}
+      />
+    </Icosahedron>
+    <Stars />
+    {generateShapes()}
+  </group>
+);
 };
 
 export default ThreeJsHomePage;
