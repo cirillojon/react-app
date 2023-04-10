@@ -10,6 +10,7 @@ const ThreeJsHomePage = () => {
   const [move, setMove] = useState(false);
   const [pointerDown, setPointerDown] = useState(false);
   const [pointerPos, setPointerPos] = useState({ x: 0, y: 0 });
+  const { size } = useThree();
 
   const handlePointerDown = useCallback((event) => {
     setPointerDown(true);
@@ -46,10 +47,20 @@ const ThreeJsHomePage = () => {
       const speed = move ? 0.2 : 0.1;
       const { x, y } = rotate;
       starRef.current.rotation.set(x, y + clock.elapsedTime * 0.5, 0);
-      starRef.current.translateZ(-speed);
+      
+      const objectZPosition = starRef.current.position.z;
+      const halfCanvasSize = size.width / 2;
+      
+      if (objectZPosition <= -halfCanvasSize || objectZPosition >= halfCanvasSize) {
+        starRef.current.translateZ(speed);
+      } else {
+        starRef.current.translateZ(-speed);
+      }
+      
       setMove(false);
     }
   });
+  
 
   useEffect(() => {
     const pointLight = new THREE.PointLight('yellow', 5, 5);
