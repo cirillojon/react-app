@@ -32,17 +32,23 @@ const Board = () => {
   
 
   const handleAIMove = useCallback(() => {
-    const emptySquareIndex = getRandomEmptySquareIndex(squares);
-    if (emptySquareIndex !== null) {
-      const newSquares = squares.slice();
-      if (newSquares[emptySquareIndex] || calculateWinner(newSquares)) {
-        return;
-      }
-      newSquares[emptySquareIndex] = isXNext ? "X" : "O";
-      setSquares(newSquares);
-      setIsXNext(!isXNext);
+  if (isXNext) {
+    // Don't make a move when it's the player's turn
+    return;
+  }
+
+  const emptySquareIndex = getRandomEmptySquareIndex(squares);
+  if (emptySquareIndex !== null) {
+    const newSquares = squares.slice();
+    if (newSquares[emptySquareIndex] || calculateWinner(newSquares)) {
+      return;
     }
-  }, [squares, isXNext]);
+    newSquares[emptySquareIndex] = isXNext ? "X" : "O";
+    setSquares(newSquares);
+    setIsXNext(!isXNext);
+  }
+}, [squares, isXNext]);
+
   
 
   useEffect(() => {
