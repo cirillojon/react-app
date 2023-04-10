@@ -116,18 +116,16 @@ const handleTouch = (event) => {
   }, [moveSnake, speed]);
   
 
-    useEffect(() => {
-    window.addEventListener('keydown', changeDirection);
-    window.addEventListener('touchstart', handleTouch);
-    window.addEventListener('touchmove', handleMove);
-    return () => {
-      window.removeEventListener('keydown', changeDirection);
-      window.removeEventListener('touchstart', handleTouch);
-      window.removeEventListener('touchmove', handleMove);
-    };
-  }, []);
-
-
+  useEffect(() => {
+  window.addEventListener('keydown', changeDirection);
+  window.addEventListener('touchstart', handleTouch);
+  window.addEventListener('touchmove', handleMove);
+  return () => {
+    window.removeEventListener('keydown', changeDirection);
+    window.removeEventListener('touchstart', handleTouch);
+    window.removeEventListener('touchmove', handleMove);
+  };
+}, [changeDirection, handleTouch, handleMove]);
 
   return (
     <div className="game4">
