@@ -144,4 +144,6 @@ useEffect(() => {
         {gameOver && <div className="game-over">Game Over</div>}
       </div>
     </div>
-  );
+    );
+};
+export default Game4;
