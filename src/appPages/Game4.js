@@ -38,30 +38,33 @@ const handleTouch = useCallback((event) => {
 }, []);
 
 
-const handleMove = useCallback((moveEvent) => {
-  if (gameOver) return;
-
-  moveEvent.preventDefault();
-  const moveX = moveEvent.touches[0].clientX;
-  const moveY = moveEvent.touches[0].clientY;
-
-  const diffX = moveX - startX;
-  const diffY = moveY - startY;
-
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    if (diffX > 0) {
-      setDirection((prev) => (prev !== 'LEFT' ? 'RIGHT' : prev));
-    } else {
-      setDirection((prev) => (prev !== 'RIGHT' ? 'LEFT' : prev));
-    }
-  } else {
-    if (diffY > 0) {
-      setDirection((prev) => (prev !== 'UP' ? 'DOWN' : prev));
-    } else {
-      setDirection((prev) => (prev !== 'DOWN' ? 'UP' : prev));
-    }
-  }
-}, [gameOver, startX, startY]);
+const handleEnd = useCallback(
+    (endEvent) => {
+      if (gameOver) return;
+  
+      endEvent.preventDefault();
+      const endX = endEvent.changedTouches[0].clientX;
+      const endY = endEvent.changedTouches[0].clientY;
+  
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+  
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+          setDirection((prev) => (prev !== "LEFT" ? "RIGHT" : prev));
+        } else {
+          setDirection((prev) => (prev !== "RIGHT" ? "LEFT" : prev));
+        }
+      } else {
+        if (diffY > 0) {
+          setDirection((prev) => (prev !== "UP" ? "DOWN" : prev));
+        } else {
+          setDirection((prev) => (prev !== "DOWN" ? "UP" : prev));
+        }
+      }
+    },
+    [gameOver, startX, startY]
+  );
 
 
 
@@ -119,15 +122,15 @@ const moveSnake = useCallback(() => {
   
 
   useEffect(() => {
-  window.addEventListener('keydown', changeDirection);
-  window.addEventListener('touchstart', handleTouch);
-  window.addEventListener('touchmove', handleMove);
-  return () => {
-    window.removeEventListener('keydown', changeDirection);
-    window.removeEventListener('touchstart', handleTouch);
-    window.removeEventListener('touchmove', handleMove);
-  };
-}, [changeDirection, handleTouch, handleMove]);
+    window.addEventListener("keydown", changeDirection);
+    window.addEventListener("touchstart", handleTouch);
+    window.addEventListener("touchend", handleEnd);
+    return () => {
+      window.removeEventListener("keydown", changeDirection);
+      window.removeEventListener("touchstart", handleTouch);
+      window.removeEventListener("touchend", handleEnd);
+    };
+  }, [changeDirection, handleTouch, handleEnd]);
 
   return (
     <div className="game4">
