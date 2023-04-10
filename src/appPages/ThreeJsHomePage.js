@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Icosahedron } from '@react-three/drei';
+import { Icosahedron, PointLight } from '@react-three/drei';
 
 const ThreeJsHomePage = () => {
   const starRef = useRef();
@@ -46,14 +46,17 @@ const ThreeJsHomePage = () => {
   });
 
   return (
-    <Icosahedron ref={starRef} args={[1, 2]} castShadow>
-      <meshStandardMaterial
-        attach="material"
-        color="yellow"
-        emissive="yellow"
-        emissiveIntensity={0.5}
-      />
-    </Icosahedron>
+    <group ref={starRef}>
+      <Icosahedron args={[1, 2]} castShadow>
+        <meshStandardMaterial
+          attach="material"
+          color="yellow"
+          emissive="yellow"
+          emissiveIntensity={1}
+        />
+      </Icosahedron>
+      <PointLight color="yellow" distance={5} intensity={5} />
+    </group>
   );
 };
 
