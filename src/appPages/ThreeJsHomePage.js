@@ -24,7 +24,8 @@ const generateShapes = () => {
           attach="material"
           //color="yellow"
           color={randomColor()}
-          emissive="yellow"
+          //emissive="yellow"
+          emissive={randomColor()}
           emissiveIntensity={0.5}
         />
       </Icosahedron>
