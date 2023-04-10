@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Game4.css';
 
 const getRandomPosition = (gridSize) => Math.floor(Math.random() * gridSize);
-const gridRef = useRef(null);
+
 
 const Game4 = () => {
     const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
@@ -10,7 +10,7 @@ const Game4 = () => {
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
     const [speed] = useState(100);
-
+    const gridRef = useRef(null);
 
   const changeDirection = useCallback((event) => {
   switch (event.key) {
