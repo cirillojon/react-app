@@ -1,30 +1,19 @@
 // ThreeJsHomePage.js
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Group, CylinderBufferGeometry, ConeBufferGeometry, MeshBasicMaterial, Vector3 } from 'three';
 
 const Spaceship = () => {
-  const material = new MeshBasicMaterial({ color: 'yellow' });
-
-  const body = (
-    <mesh>
-      <CylinderBufferGeometry attach="geometry" args={[0.5, 0.5, 2, 32]} />
-      {material}
-    </mesh>
-  );
-
-  const nose = (
-    <mesh position={new Vector3(0, 0, 1)}>
-      <ConeBufferGeometry attach="geometry" args={[0.5, 1, 32]} />
-      {material}
-    </mesh>
-  );
-
   return (
-    <Group>
-      {body}
-      {nose}
-    </Group>
+    <>
+      <mesh>
+        <CylinderBufferGeometry attach="geometry" args={[0.5, 0.5, 2, 32]} />
+        <meshBasicMaterial attach="material" color="yellow" />
+      </mesh>
+      <mesh position={[0, 0, 1]}>
+        <ConeBufferGeometry attach="geometry" args={[0.5, 1, 32]} />
+        <meshBasicMaterial attach="material" color="yellow" />
+      </mesh>
+    </>
   );
 };
 
@@ -41,9 +30,9 @@ const ThreeJsHomePage = () => {
   });
 
   return (
-    <mesh ref={spaceshipRef}>
+    <group ref={spaceshipRef}>
       <Spaceship />
-    </mesh>
+    </group>
   );
 };
 
