@@ -15,12 +15,13 @@ const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
 
-  const handleClick = useCallback((i) => {
+  const handleClick = useCallback(
+  (i) => {
     if (!isXNext) {
       // Don't allow clicks when it's not the player's turn
       return;
     }
-  
+
     const newSquares = squares.slice();
     if (newSquares[i] || calculateWinner(newSquares)) {
       return;
@@ -28,7 +29,14 @@ const Board = () => {
     newSquares[i] = isXNext ? "X" : "O";
     setSquares(newSquares);
     setIsXNext(!isXNext);
-  }, [isXNext, squares]);
+
+    // AI's turn
+    setTimeout(() => {
+      handleAIMove();
+    }, 1000); // Wait 1 second before making the AI move
+  },
+  [isXNext, squares, handleAIMove]
+);
   
 
   const handleAIMove = useCallback(() => {
@@ -48,17 +56,6 @@ const Board = () => {
     setIsXNext(!isXNext);
   }
 }, [squares, isXNext]);
-
-  
-
-  useEffect(() => {
-    if (!isXNext && !calculateWinner(squares)) {
-      setTimeout(() => {
-        handleAIMove();
-      }, 1000); // Wait 1 second before making the AI move
-    }
-  }, [squares, isXNext, handleAIMove]);
-  
 
   const getRandomEmptySquareIndex = (squares) => {
     const emptySquares = squares
