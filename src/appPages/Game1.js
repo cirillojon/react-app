@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './Game1.css';
 
 const Square = ({ value, onClick }) => {
   return (
