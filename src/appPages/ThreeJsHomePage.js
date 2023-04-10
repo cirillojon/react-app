@@ -23,7 +23,7 @@ const ThreeJsHomePage = () => {
       <Cone args={[0.5, 1, 32]} position={[0, 1, 0]} castShadow>
         <meshBasicMaterial attach="material" color="red" />
       </Cone>
-      <SmokeEffect count={500} color="white" />
+      {/* <SmokeEffect count={500} color="white" /> */}
     </group>
   );
 };
