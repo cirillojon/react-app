@@ -1,3 +1,21 @@
+[[headers]]
+  for = "/*.br"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/Build/*.br"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/game.html.br"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "text/html"
+
 [build]
   command = "yarn build" # the command you run to build this file
   functions = "built-lambda" # netlify-lambda builds to this folder AND Netlify reads functions from here
