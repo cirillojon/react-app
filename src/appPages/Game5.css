@@ -1,5 +1,8 @@
 .moving-button {
     position: absolute;
     transition: all 0.5s ease-in-out;
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
   }
   
