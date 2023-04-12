@@ -2,9 +2,7 @@ import React from 'react';
 
 class UnityGame extends React.Component {
   render() {
-    //const gamePath = './Game1-build/game.html'
-    const gamePath = '/src/appPages/Game1-build/game.html';
-
+    const gamePath = '/Game1-build/game.html';
 
     return (
       <div>
