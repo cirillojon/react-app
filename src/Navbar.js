@@ -27,6 +27,9 @@ const Navbar = () => {
         <li> 
         <NavLink to="/Game5" activeClassName="active">Button Game</NavLink>
         </li>
+        <li> 
+        <NavLink to="/Game6" activeClassName="active">Unity Game</NavLink>
+        </li>
       </ul>
     </nav>
   );
