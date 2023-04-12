@@ -1,4 +1,9 @@
 [[headers]]
+  for = "/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+
+[[headers]]
   for = "/*.br"
   [headers.values]
     Content-Encoding = "br"
