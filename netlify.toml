@@ -1,24 +1,26 @@
 [[headers]]
-  for = "/Game1-build/Build/*.wasm"
-  [headers.values]
-    Content-Type = "application/wasm"
-
-[[headers]]
   for = "/Game1-build/Build/*.wasm.br"
   [headers.values]
     Content-Encoding = "br"
     Content-Type = "application/wasm"
 
 [[headers]]
-  for = "/Game1-build/Build/*.data.br"
+  for = "/*.br"
   [headers.values]
     Content-Encoding = "br"
-    Content-Type = "application/octet-stream"
+    Content-Type = "application/javascript"
 
 [[headers]]
-  for = "/Game1-build/Build/*.unityweb"
+  for = "/Build/*.br"
   [headers.values]
-    Content-Type = "application/octet-stream"
+    Content-Encoding = "br"
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/game.html.br"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "text/html"
 
 [build]
   command = "yarn build"
