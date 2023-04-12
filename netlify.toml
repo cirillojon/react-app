@@ -25,3 +25,8 @@
   [headers.values]
     Content-Encoding = "br"
     Content-Type = "application/javascript"
+
+[build]
+  command = "yarn build"
+  functions = "built-lambda"
+  publish = "build"
