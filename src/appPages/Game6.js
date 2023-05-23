@@ -14,11 +14,11 @@ class UnityGame extends React.Component {
   }
 
   render() {
-    const gamePath = '/Game1/index.html';
+    const gamePath = '/Game2/index.html';
 
     return (
       <div>
-        <iframe id="gameIframe" src={gamePath} title="Unity Game" width="1920" height="1080" frameborder="0"></iframe>
+        <iframe id="gameIframe" src={gamePath} title="Unity Game" width="1000" height="800" frameborder="0"></iframe>
       </div>
     );
   }
