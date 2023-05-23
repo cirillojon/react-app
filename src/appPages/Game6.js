@@ -14,7 +14,7 @@ class UnityGame extends React.Component {
   }
 
   render() {
-    const gamePath = '/Builds/game.html';
+    const gamePath = '/Game1/index.html';
 
     return (
       <div>
