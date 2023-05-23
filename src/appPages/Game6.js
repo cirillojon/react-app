@@ -18,7 +18,7 @@ class UnityGame extends React.Component {
 
     return (
       <div>
-        <iframe id="gameIframe" src={gamePath} title="Unity Game" width="1000" height="800" frameborder="0"></iframe>
+        <iframe id="gameIframe" src={gamePath} title="Unity Game" width="1920" height="1080" frameborder="0"></iframe>
       </div>
     );
   }
