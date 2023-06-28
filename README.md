@@ -17,7 +17,7 @@ https://react-app-sandbox.netlify.app/
 
 - Will eventually turn into something substantial 
 
-## App created using netlify craate react app demo
+## App created using netlify create react app demo
    
    - Original readme is below:
 
